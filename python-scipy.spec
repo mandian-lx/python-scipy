@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.5.2
-%define release 4
+%define release 5
 
 Summary:	Scientific tools for Python
 Name:		%{name}
@@ -16,7 +16,7 @@ Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
-Requires:	python-numpy >= 1.0
+Requires:	python, python-numpy >= 1.0
 BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
 BuildRequires:	python-numpy-devel >= 1.0, python-numpy >= 1.0
