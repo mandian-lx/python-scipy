@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.5.2
-%define release 5
+%define release 6
 
 Summary:	Scientific tools for Python
 Name:		%{name}
@@ -11,6 +11,7 @@ Source0:	%{module}-%{version}.tar.bz2
 Source1:	randomkit.tar.bz2
 Patch0:		sandbox-setup.patch
 Patch1:		montecarlo.py.patch
+Patch2:		numpy_related.patch 
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -37,6 +38,9 @@ solvers, and others.
 %setup -n %{module}-%{version} -q
 %patch0 -p0
 %patch1 -p0
+# remove patch 2 after 0.5.3 is released
+%patch2 -p0 
+
 %__tar jfx %SOURCE1 -C ./Lib/sandbox/montecarlo/src
 
 %build
