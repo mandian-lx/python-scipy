@@ -22,7 +22,7 @@ BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
 BuildRequires:	python-numpy-devel >= 1.0, python-numpy >= 1.0
 BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
-BuildRequires:	umfpack-devel >= 4.4, amd-devel >= 1.2
+BuildRequires:	umfpack-devel < 5.0, amd-devel < 2.0
 BuildRequires:	libx11-devel, netcdf-devel
 
 %description
