@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
-%define version 0.5.2
-%define release 6
+%define version 0.5.2.1
+%define release 1
 
 Summary:	Scientific tools for Python
 Name:		%{name}
