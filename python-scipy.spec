@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.6.0
-%define release 1
+%define release 2
 
 Summary:	Scientific tools for Python
 Name:		%{name}
@@ -12,6 +12,7 @@ Source1:	randomkit.tar.bz2
 Patch0:		sandbox-setup.patch
 Patch1:		montecarlo-setup.py.patch
 Patch2:		montecarlo.py.patch
+Patch3:		umfpack-setup.py.patch
 Source2:	enabled_packages.txt
 License:	BSD
 Group:		Development/Python
@@ -23,7 +24,7 @@ BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
 BuildRequires:	python-numpy-devel >= 1.0, python-numpy >= 1.0
 BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
-BuildRequires:	umfpack-devel < 5.0, amd-devel < 2.0
+BuildRequires:	umfpack-devel, amd-devel
 BuildRequires:	libx11-devel, netcdf-devel
 
 %description
@@ -40,6 +41,7 @@ solvers, and others.
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
+%patch3 -p0
 
 %__tar jfx %SOURCE1 -C ./scipy/sandbox/montecarlo/src
 %__cp %SOURCE2 ./scipy/sandbox/
