@@ -16,6 +16,7 @@ Patch3:		umfpack-setup.py.patch
 Source2:	enabled_packages.txt
 License:	BSD
 Group:		Development/Python
+BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
 Requires:	python, python-numpy >= 1.0
