@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.6.0
-%define release 3
+%define release 4
 
 Summary:	Scientific tools for Python
 Name:		%{name}
@@ -25,12 +25,7 @@ BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel
 BuildRequires:	python-numpy-devel >= 1.0, python-numpy >= 1.0
 BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
 BuildRequires:	libx11-devel, netcdf-devel
-# Needed to force use of devel libraries built from suitesparse
-%ifarch x86_64
-BuildRequires:	lib64umfpack5-devel, lib64amd2-devel
-%else
-BuildRequires:	libumfpack5-devel, libamd2-devel
-%endif
+BuildRequires:	amd-devel, umfpack-devel
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
