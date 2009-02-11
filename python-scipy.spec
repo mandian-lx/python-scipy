@@ -1,37 +1,28 @@
 %define module	scipy
 %define name	python-%{module}
-%define version 0.6.0
-%define release 8
+%define version 0.7.0
+%define release %mkrel 1
 
 Summary:	Scientific tools for Python
 Name:		%{name}
 Version:	%{version}
-Release:	%mkrel %{release}
-Source0:	%{module}-%{version}.tar.bz2
-Source1:	randomkit.tar.bz2
-Patch0:		sandbox-setup.patch
-Patch1:		montecarlo-setup.py.patch
-Patch2:		montecarlo.py.patch
-Patch3:		umfpack-setup.py.patch
-Source2:	enabled_packages.txt
+Release:	%{release}
+Source0:	%{module}-%{version}.tar.lzma
+Patch0:		umfpack-setup.py.patch
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
-Requires:	python, python-numpy >= 1.0
+Requires:	python, python-numpy >= 1.2.0
 BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
-BuildRequires:	python-numpy-devel >= 1.0, python-numpy >= 1.0
+BuildRequires:	python-numpy-devel >= 1.2.0, python-numpy >= 1.2.0
 BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
 BuildRequires:	libx11-devel, netcdf-devel
 # Needed to prevent older amd/umfpack devel packages from interfering with
 # build on 2008.0:
-%if %mdkversion < 200810
 BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
-%else
-BuildRequires:	amd-devel, umfpack-devel
-%endif
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -43,14 +34,8 @@ special functions, signal and image processing, genetic algorithms, ODE
 solvers, and others.
 
 %prep
-%setup -n %{module}-%{version} -q
+%setup -q -n %{module}-%{version}
 %patch0 -p0
-%patch1 -p0
-%patch2 -p0
-%patch3 -p0
-
-%__tar jfx %SOURCE1 -C ./scipy/sandbox/montecarlo/src
-%__cp %SOURCE2 ./scipy/sandbox/
 
 %build
 
@@ -79,10 +64,7 @@ export BLAS=%{_libdir}/libblas.a
 export LAPACK=%{_libdir}/liblapack.a
 export ATLAS=None
 
-%__python setup.py config_fc --fcompiler=gnu95 install --root=%{buildroot} --record=INSTALLED_FILES.tmp
-
-# Don't include original test files:
-%__grep -Ev "\\.orig$" INSTALLED_FILES.tmp > INSTALLED_FILES
+%__python setup.py config_fc --fcompiler=gnu95 install --root=%{buildroot} --record=INSTALLED_FILES
 
 ## Uncomment the following once the scipy tests are stable ##
 #%check
@@ -95,8 +77,4 @@ export ATLAS=None
 
 %files -f INSTALLED_FILES
 %defattr(-,root,root)
-%doc *.txt
-
-
-
-
+%doc README.txt THANKS.txt LICENSE.txt
