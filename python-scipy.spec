@@ -3,6 +3,8 @@
 %define version 0.7.0
 %define release %mkrel 1
 
+%define Werror_cflags %nil
+
 Summary:	Scientific tools for Python
 Name:		%{name}
 Version:	%{version}
