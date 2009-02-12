@@ -11,6 +11,7 @@ Version:	%{version}
 Release:	%{release}
 Source0:	%{module}-%{version}.tar.lzma
 Patch0:		umfpack-setup.py.patch
+Patch1:		superlu.patch
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -37,7 +38,8 @@ solvers, and others.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p0
+%patch0 -p0 -b .umfpack
+%patch1 -p0 -b .superlu
 
 %build
 
