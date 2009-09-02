@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.0
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define Werror_cflags %nil
 
@@ -18,6 +18,7 @@ BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
 Requires:	python, python-numpy >= 1.2.0
+Suggests:	python-nose
 BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
 BuildRequires:	python-numpy-devel >= 1.2.0, python-numpy >= 1.2.0
