@@ -1,7 +1,7 @@
 %define module	scipy
 %define name	python-%{module}
-%define version 0.7.0
-%define release %mkrel 3
+%define version 0.7.1
+%define release %mkrel 1
 
 %define Werror_cflags %nil
 
@@ -9,7 +9,7 @@ Summary:	Scientific tools for Python
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
-Source0:	%{module}-%{version}.tar.lzma
+Source0:	%{module}-%{version}.tar.gz
 Patch0:		umfpack-setup.py.patch
 Patch1:		superlu.patch
 License:	BSD
@@ -17,11 +17,11 @@ Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
-Requires:	python, python-numpy >= 1.2.0
+Requires:	python, python-numpy >= 1.3.0
 Suggests:	python-nose
 BuildRequires:	swig
 BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
-BuildRequires:	python-numpy-devel >= 1.2.0, python-numpy >= 1.2.0
+BuildRequires:	python-numpy-devel >= 1.3.0, python-numpy >= 1.3.0
 BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
 BuildRequires:	libx11-devel, netcdf-devel
 # Needed to prevent older amd/umfpack devel packages from interfering with
