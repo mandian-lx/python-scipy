@@ -1,7 +1,10 @@
+%define enable_atlas 1
+%{?_with_atlas: %global enable_atlas 1}
+
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.1
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define Werror_cflags %nil
 
@@ -17,13 +20,19 @@ Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
-Requires:	python, python-numpy >= 1.3.0
-Suggests:	python-nose
+Requires:	python-numpy >= 1.3.0
 BuildRequires:	swig
-BuildRequires:	python-devel, fftw-devel, blas-devel, lapack-devel 
-BuildRequires:	python-numpy-devel >= 1.3.0, python-numpy >= 1.3.0
-BuildRequires:	gcc >= 4.0, gcc-gfortran >= 4.0
-BuildRequires:	libx11-devel, netcdf-devel
+%if %enable_atlas
+BuildRequires:	libatlas-devel
+%else
+BuildRequires:	blas-devel
+%endif 
+BuildRequires:	lapack-devel 
+BuildRequires:	python-numpy-devel >= 1.3.0
+BuildRequires:	gcc-gfortran >= 4.0
+BuildRequires:	netcdf-devel
+BuildRequires:	python-nose
+%py_requires -d
 # Needed to prevent older amd/umfpack devel packages from interfering with
 # build on 2008.0:
 BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
@@ -44,11 +53,6 @@ solvers, and others.
 
 %build
 
-# Use netlib BLAS/LAPACK:
-export BLAS=%{_libdir}/libblas.a
-export LAPACK=%{_libdir}/liblapack.a
-export ATLAS=None
-
 # Make sure that gcc 4 is being used to build the package:
 GCC_VERSION=`gcc --version | awk 'NR == 1 {print $3}'`
 if echo $GCC_VERSION | grep ^4 > /dev/null; then
@@ -60,26 +64,26 @@ fi
 
 export CC=gcc-$GCC_VERSION
 
-CFLAGS="-fPIC" %__python setup.py config_fc --fcompiler=gnu95 build
+CFLAGS="%{optflags} -fPIC -O3" %__python setup.py config_fc --fcompiler=gnu95 build
 
 %install
 %__rm -rf %{buildroot}
+CFLAGS="%{optflags} -fPIC -O3" %__python setup.py install --root=%{buildroot} 
 
-export BLAS=%{_libdir}/libblas.a
-export LAPACK=%{_libdir}/liblapack.a
-export ATLAS=None
+# Remove doc files that should be in %doc:
+%__rm -f %{buildroot}%{py_platsitedir}/%{module}/*.txt
 
-%__python setup.py config_fc --fcompiler=gnu95 install --root=%{buildroot} --record=INSTALLED_FILES
-
-## Uncomment the following once the scipy tests are stable ##
-#%check
-#export PYTHONPATH=%{buildroot}/%{_libdir}/python%{pyver}/site-packages/
-#echo $PYTHONPATH
-# python -c "import scipy; scipy.test(level=1, verbosity=2)"
+%check
+pushd doc &> /dev/null
+PYTHONPATH=%{buildroot}%{py_platsitedir} python -c "import scipy; scipy.test()"
+popd &> /dev/null
 
 %clean
 %__rm -rf %{buildroot}
 
-%files -f INSTALLED_FILES
+%files
 %defattr(-,root,root)
-%doc README.txt THANKS.txt LICENSE.txt
+%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt
+%dir %{py_platsitedir}/%{module}
+%{py_platsitedir}/%{module}/*
+%{py_platsitedir}/%{module}-*.egg-info
