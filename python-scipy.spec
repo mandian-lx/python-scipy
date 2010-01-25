@@ -4,7 +4,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.1
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define Werror_cflags %nil
 
