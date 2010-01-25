@@ -33,9 +33,13 @@ BuildRequires:	gcc-gfortran >= 4.0
 BuildRequires:	netcdf-devel
 BuildRequires:	python-nose
 %py_requires -d
+%if %{mdkversion} <= 200800
 # Needed to prevent older amd/umfpack devel packages from interfering with
 # build on 2008.0:
 BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
+%else
+BuildRequires:	amd-devel umfpack-devel
+%endif
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
