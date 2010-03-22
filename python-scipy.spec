@@ -4,7 +4,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.1
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define Werror_cflags %nil
 
@@ -20,6 +20,7 @@ Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
+Obsoletes:	python-symeig
 Requires:	python-numpy >= 1.3.0
 BuildRequires:	swig
 %if %enable_atlas
