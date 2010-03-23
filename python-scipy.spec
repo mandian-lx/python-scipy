@@ -4,7 +4,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.1
-%define release %mkrel 5
+%define release %mkrel 6
 
 %define Werror_cflags %nil
 
@@ -73,7 +73,7 @@ CFLAGS="%{optflags} -fPIC -O3" %__python setup.py config_fc --fcompiler=gnu95 bu
 
 %install
 %__rm -rf %{buildroot}
-CFLAGS="%{optflags} -fPIC -O3" %__python setup.py install --root=%{buildroot} 
+CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} 
 
 # Remove doc files that should be in %doc:
 %__rm -f %{buildroot}%{py_platsitedir}/%{module}/*.txt
