@@ -3,8 +3,8 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.7.1
-%define release %mkrel 6
+%define version 0.7.2
+%define release %mkrel 1
 
 %define Werror_cflags %nil
 
@@ -69,7 +69,7 @@ fi
 
 export CC=gcc-$GCC_VERSION
 
-CFLAGS="%{optflags} -fPIC -O3" %__python setup.py config_fc --fcompiler=gnu95 build
+CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py config_fc --fcompiler=gnu95 build
 
 %install
 %__rm -rf %{buildroot}
