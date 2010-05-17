@@ -4,7 +4,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.7.2
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define Werror_cflags %nil
 
@@ -15,6 +15,7 @@ Release:	%{release}
 Source0:	%{module}-%{version}.tar.gz
 Patch0:		umfpack-setup.py.patch
 Patch1:		superlu.patch
+Patch2:		changeset_r5790.diff
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -55,6 +56,7 @@ solvers, and others.
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
 %patch1 -p0 -b .superlu
+%patch2 -p1 -b .changeset_r5790
 
 %build
 
