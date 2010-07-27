@@ -41,6 +41,7 @@ BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
 BuildRequires:	amd-devel umfpack-devel
 %endif
 BuildRequires:	python-sphinx
+BuildRequires:	python-matplotlib
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -70,7 +71,10 @@ export CC=gcc-$GCC_VERSION
 
 CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py config_fc --fcompiler=gnu95 build
 
-%__make -C doc html
+pushd doc
+export PYTHONPATH=`dir -d ../build/lib.linux*`
+%__make html
+popd
 
 %install
 %__rm -rf %{buildroot}
