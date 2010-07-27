@@ -3,8 +3,8 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.7.2
-%define release %mkrel 2
+%define version 0.8.0
+%define release %mkrel 1
 
 %define Werror_cflags %nil
 
@@ -14,15 +14,13 @@ Version:	%{version}
 Release:	%{release}
 Source0:	%{module}-%{version}.tar.gz
 Patch0:		umfpack-setup.py.patch
-Patch1:		superlu.patch
-Patch2:		changeset_r5790.diff
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
 Obsoletes:	python-symeig
-Requires:	python-numpy >= 1.3.0
+Requires:	python-numpy >= 1.4.1
 BuildRequires:	swig
 %if %enable_atlas
 BuildRequires:	libatlas-devel
@@ -30,7 +28,7 @@ BuildRequires:	libatlas-devel
 BuildRequires:	blas-devel
 %endif 
 BuildRequires:	lapack-devel 
-BuildRequires:	python-numpy-devel >= 1.3.0
+BuildRequires:	python-numpy-devel >= 1.4.1
 BuildRequires:	gcc-gfortran >= 4.0
 BuildRequires:	netcdf-devel
 BuildRequires:	python-nose
@@ -42,6 +40,7 @@ BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
 %else
 BuildRequires:	amd-devel umfpack-devel
 %endif
+BuildRequires:	python-sphinx
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -55,8 +54,6 @@ solvers, and others.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
-%patch1 -p0 -b .superlu
-%patch2 -p1 -b .changeset_r5790
 
 %build
 
@@ -72,6 +69,8 @@ fi
 export CC=gcc-$GCC_VERSION
 
 CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py config_fc --fcompiler=gnu95 build
+
+%__make -C doc html
 
 %install
 %__rm -rf %{buildroot}
@@ -90,7 +89,7 @@ popd &> /dev/null
 
 %files
 %defattr(-,root,root)
-%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt
+%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt doc/build/html
 %dir %{py_platsitedir}/%{module}
 %{py_platsitedir}/%{module}/*
 %{py_platsitedir}/%{module}-*.egg-info
