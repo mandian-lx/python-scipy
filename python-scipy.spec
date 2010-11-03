@@ -4,7 +4,7 @@
 %define module	scipy
 %define name	python-%{module}
 %define version 0.8.0
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define Werror_cflags %nil
 
@@ -13,7 +13,6 @@ Name:		%{name}
 Version:	%{version}
 Release:	%{release}
 Source0:	%{module}-%{version}.tar.gz
-Patch0:		umfpack-setup.py.patch
 License:	BSD
 Group:		Development/Python
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -43,6 +42,14 @@ BuildRequires:	amd-devel umfpack-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
+Patch0:		umfpack-setup.py.patch
+
+# http://projects.scipy.org/scipy/ticket/1180
+Patch1:		0001-FIX-define-macro-to-access-C99-extensions-from-C.patch
+
+# http://projects.scipy.org/numpy/ticket/1489
+Patch2:		changeset_r8549.diff
+
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
 supplements the popular numpy module, gathering a variety of high level
@@ -55,6 +62,8 @@ solvers, and others.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
+%patch1 -p1
+%patch2 -p2
 
 %build
 
