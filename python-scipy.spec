@@ -3,8 +3,8 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.8.0
-%define release %mkrel 2
+%define version 0.9.0
+%define release %mkrel 1
 
 %define Werror_cflags %nil
 
@@ -19,7 +19,7 @@ BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
 Obsoletes:	python-symeig
-Requires:	python-numpy >= 1.4.1
+Requires:	python-numpy >= 1.5
 BuildRequires:	swig
 %if %enable_atlas
 BuildRequires:	libatlas-devel
@@ -27,7 +27,7 @@ BuildRequires:	libatlas-devel
 BuildRequires:	blas-devel
 %endif 
 BuildRequires:	lapack-devel 
-BuildRequires:	python-numpy-devel >= 1.4.1
+BuildRequires:	python-numpy-devel >= 1.5
 BuildRequires:	gcc-gfortran >= 4.0
 BuildRequires:	netcdf-devel
 BuildRequires:	python-nose
@@ -44,12 +44,6 @@ BuildRequires:	python-matplotlib
 
 Patch0:		umfpack-setup.py.patch
 
-# http://projects.scipy.org/scipy/ticket/1180
-Patch1:		0001-FIX-define-macro-to-access-C99-extensions-from-C.patch
-
-# http://projects.scipy.org/numpy/ticket/1489
-Patch2:		changeset_r8549.diff
-
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
 supplements the popular numpy module, gathering a variety of high level
@@ -62,8 +56,6 @@ solvers, and others.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
-%patch1 -p1
-%patch2 -p2
 
 %build
 
