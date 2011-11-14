@@ -3,7 +3,7 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.9.0
+%define version 0.10.0
 %define release %mkrel 1
 
 %define Werror_cflags %nil
@@ -43,7 +43,8 @@ BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
 Patch0:		umfpack-setup.py.patch
-Patch1:		setup-lm-0.9.0.patch
+Patch1:		setup-lm-0.10.0.patch
+Patch2:		doc-plot-0.10.0.patch
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -58,6 +59,7 @@ solvers, and others.
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
 %patch1 -p0 -b .lm
+%patch2 -p0 -b .doc
 
 %build
 
