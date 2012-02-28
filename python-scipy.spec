@@ -1,11 +1,16 @@
 %define enable_atlas 1
 %{?_with_atlas: %global enable_atlas 1}
+%define Werror_cflags %nil
 
 %define module	scipy
 %define name	python-%{module}
 %define version 0.10.1
-%define release 1
-%define Werror_cflags %nil
+%define rel		1
+%if %mdkversion < 201100
+%define release %mkrel %rel
+%else
+%define release %rel
+%endif
 
 Summary:	Scientific tools for Python
 Name:		%{name}
