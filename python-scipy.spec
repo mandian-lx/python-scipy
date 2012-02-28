@@ -3,9 +3,8 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.10.0
-%define release %mkrel 1
-
+%define version 0.10.1
+%define release 1
 %define Werror_cflags %nil
 
 Summary:	Scientific tools for Python
