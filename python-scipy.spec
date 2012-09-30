@@ -4,7 +4,7 @@
 
 %define module	scipy
 %define name	python-%{module}
-%define version 0.10.1
+%define version 0.11.0
 %define rel		1
 %if %mdkversion < 201100
 %define release %mkrel %rel
@@ -41,14 +41,16 @@ BuildRequires:	python-nose
 # build on 2008.0:
 BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
 %else
-BuildRequires:	amd-devel umfpack-devel
+BuildRequires:	amd-devel, umfpack-devel
 %endif
+# SuiteSparse interface changed in 4.+
+BuildRequires:	suitesparse-common-devel < 4.0.0
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
 Patch0:		umfpack-setup.py.patch
-Patch1:		setup-lm-0.10.0.patch
-Patch2:		doc-plot-0.10.0.patch
+Patch1:		setup-lm-0.11.0.patch
+Patch2:		doc-plot-0.11.0.patch
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
