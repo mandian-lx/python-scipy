@@ -70,7 +70,11 @@ solvers, and others.
 %build
 
 # Make sure that gcc 4 is being used to build the package:
+%if %mdkversion < 201200
 GCC_VERSION=`gcc --version | awk 'NR == 1 {print $3}'`
+%else
+GCC_VERSION=`gcc --version | awk 'NR == 1 {print $4}'`
+%endif
 if echo $GCC_VERSION | grep ^4 > /dev/null; then
    export CC=gcc-$GCC_VERSION
 else
