@@ -3,23 +3,14 @@
 %define Werror_cflags %nil
 
 %define module	scipy
-%define name	python-%{module}
-%define version 0.11.0
-%define rel		1
-%if %mdkversion < 201100
-%define release %mkrel %rel
-%else
-%define release %rel
-%endif
 
 Summary:	Scientific tools for Python
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:		python-%{module}
+Version:	0.11.0
+Release:	2
 Source0:	%{module}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 Url:		http://www.scipy.org
 Obsoletes:	python-SciPy
 Obsoletes:	python-symeig
@@ -30,21 +21,14 @@ BuildRequires:	libatlas-devel
 %else
 BuildRequires:	blas-devel
 %endif 
-BuildRequires:	lapack-devel 
+BuildRequires:	pkgconfig(lapack)
 BuildRequires:	python-numpy-devel >= 1.5
 BuildRequires:	gcc-gfortran >= 4.0
 BuildRequires:	netcdf-devel
 BuildRequires:	python-nose
 %py_requires -d
-%if %{mdkversion} <= 200800
-# Needed to prevent older amd/umfpack devel packages from interfering with
-# build on 2008.0:
-BuildRequires:	amd-devel = 2.2.0, umfpack-devel = 5.2.0
-%else
-BuildRequires:	amd-devel, umfpack-devel
-%endif
-# SuiteSparse interface changed in 4.+
-BuildRequires:	suitesparse-common-devel < 4.0.0
+BuildRequires:	amd-devel
+BuildRequires:	umfpack-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
@@ -64,51 +48,49 @@ solvers, and others.
 %prep
 %setup -q -n %{module}-%{version}
 %patch0 -p0 -b .umfpack
-%patch1 -p0 -b .lm
+%patch1 -p1 -b .lm
 %patch2 -p0 -b .doc
 
+find . -type f -name "*.py" -exec sed -i "s|#!/usr/bin/env python||" {} \;
+
+cat > site.cfg << EOF
+[amd]
+library_dirs = %{_libdir}
+include_dirs = /usr/include/suitesparse:/usr/include/ufsparse
+amd_libs = amd
+
+[umfpack]
+library_dirs = %{_libdir}
+include_dirs = /usr/include/suitesparse:/usr/include/ufsparse
+umfpack_libs = umfpack
+EOF
+
 %build
-
-# Make sure that gcc 4 is being used to build the package:
-%if %mdkversion < 201200
-GCC_VERSION=`gcc --version | awk 'NR == 1 {print $3}'`
-%else
-GCC_VERSION=`gcc --version | awk 'NR == 1 {print $4}'`
-%endif
-if echo $GCC_VERSION | grep ^4 > /dev/null; then
-   export CC=gcc-$GCC_VERSION
-else
-   echo "Need GCC 4 to build"
-   exit 1
-fi
-
-export CC=gcc-$GCC_VERSION
-
-CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py config_fc --fcompiler=gnu95 build
-
-pushd doc
-export PYTHONPATH=`dir -d ../build/lib.linux*`
-%__make html
-popd
+CFLAGS="%{optflags} -fno-strict-aliasing" \
+ATLAS=%{_libdir}/atlas \
+FFTW=%{_libdir}
+BLAS=%{_libdir} \
+LAPACK=%{_libdir} \
+python setup.py config_fc --fcompiler=gnu95 --noarch build
 
 %install
-%__rm -rf %{buildroot}
-CFLAGS="%{optflags} -fPIC -O3" PYTHONDONTWRITEBYTECODE= %__python setup.py install --root=%{buildroot} 
+python setup.py install --prefix=%{_prefix} --root=%{buildroot}
+find %{buildroot}%{python_sitearch}/scipy -type d -name tests | xargs rm -rf # Don't ship tests
+# Don't ship weave examples, they're marked as documentation:
+find %{buildroot}%{python_sitearch}/scipy/weave -type d -name examples | xargs rm -rf
+# fix executability issue
+chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/arffread.py
+chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/utils.py
+chmod +x %{buildroot}%{python_sitearch}/%{module}/special/spfun_stats.py
 
-# Remove doc files that should be in %doc:
-%__rm -f %{buildroot}%{py_platsitedir}/%{module}/*.txt
 
 %check
 pushd doc &> /dev/null
 PYTHONPATH=%{buildroot}%{py_platsitedir} python -c "import scipy; scipy.test()"
 popd &> /dev/null
 
-%clean
-%__rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
-%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt doc/build/html
+%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt
 %dir %{py_platsitedir}/%{module}
 %{py_platsitedir}/%{module}/*
 %{py_platsitedir}/%{module}-*.egg-info
