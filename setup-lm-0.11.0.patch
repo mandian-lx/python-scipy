@@ -1,8 +1,6 @@
-diff --git a/scipy/cluster/setup.py b/scipy/cluster/setup.py
-index 715bbac..2e9a63f 100755
---- a/scipy/cluster/setup.py
-+++ b/scipy/cluster/setup.py
-@@ -17,11 +17,13 @@ def configuration(parent_package = '', top_path = None):
+--- scipy-0.12.0/scipy/cluster/setup.py.orig	2013-07-20 21:11:49.493279989 -0300
++++ scipy-0.12.0/scipy/cluster/setup.py	2013-07-20 21:13:57.824285848 -0300
+@@ -19,11 +19,13 @@ def configuration(parent_package = '', t
      config.add_extension('_vq',
          sources=[join('src', 'vq_module.c'), join('src', 'vq.c')],
          include_dirs = [get_numpy_include_dirs()],
@@ -16,11 +14,9 @@ index 715bbac..2e9a63f 100755
          define_macros=DEFINE_MACROS)
  
      return config
-diff --git a/scipy/interpolate/setup.py b/scipy/interpolate/setup.py
-index 8b36042..4f440c9 100755
---- a/scipy/interpolate/setup.py
-+++ b/scipy/interpolate/setup.py
-@@ -12,7 +12,8 @@ def configuration(parent_package='',top_path=None):
+--- scipy-0.12.0/scipy/interpolate/setup.py.orig	2013-07-20 21:11:59.953280467 -0300
++++ scipy-0.12.0/scipy/interpolate/setup.py	2013-07-20 21:14:38.362287698 -0300
+@@ -13,7 +13,8 @@ def configuration(parent_package='',top_
                        )
  
      config.add_extension('interpnd',
@@ -30,7 +26,7 @@ index 8b36042..4f440c9 100755
  
      config.add_extension('_fitpack',
                           sources=['src/_fitpackmodule.c'],
-@@ -28,6 +29,7 @@ def configuration(parent_package='',top_path=None):
+@@ -29,6 +30,7 @@ def configuration(parent_package='',top_
      config.add_extension('_interpolate',
                           sources=['src/_interpolate.cpp'],
                           include_dirs = ['src'],
@@ -38,11 +34,9 @@ index 8b36042..4f440c9 100755
                           depends = ['src/interpolate.h'])
  
      config.add_data_dir('tests')
-diff --git a/scipy/ndimage/setup.py b/scipy/ndimage/setup.py
-index 115769f..7217bd7 100644
---- a/scipy/ndimage/setup.py
-+++ b/scipy/ndimage/setup.py
-@@ -11,6 +11,7 @@ def configuration(parent_package='', top_path=None):
+--- scipy-0.12.0/scipy/ndimage/setup.py.orig	2013-07-20 21:12:11.681281002 -0300
++++ scipy-0.12.0/scipy/ndimage/setup.py	2013-07-20 21:15:14.003289325 -0300
+@@ -13,6 +13,7 @@ def configuration(parent_package='', top
                   "src/ni_fourier.c","src/ni_interpolation.c",
                   "src/ni_measure.c",
                   "src/ni_morphology.c","src/ni_support.c"],
@@ -50,11 +44,9 @@ index 115769f..7217bd7 100644
          include_dirs=['src']+[get_include()],
      )
  
-diff --git a/scipy/optimize/setup.py b/scipy/optimize/setup.py
-index 3beb5fb..a44e247 100755
---- a/scipy/optimize/setup.py
-+++ b/scipy/optimize/setup.py
-@@ -15,7 +15,8 @@ def configuration(parent_package='',top_path=None):
+--- scipy-0.12.0/scipy/optimize/setup.py.orig	2013-07-20 21:12:19.880281376 -0300
++++ scipy-0.12.0/scipy/optimize/setup.py	2013-07-20 21:15:55.266291209 -0300
+@@ -16,7 +16,8 @@ def configuration(parent_package='',top_
  
      config.add_library('rootfind',
                         sources=[join('Zeros','*.c')],
@@ -64,7 +56,7 @@ index 3beb5fb..a44e247 100755
  
      config.add_extension('_zeros',
                           sources=['zeros.c'],
-@@ -30,7 +31,8 @@ def configuration(parent_package='',top_path=None):
+@@ -31,7 +32,8 @@ def configuration(parent_package='',top_
      sources=['moduleTNC.c','tnc.c']
      config.add_extension('moduleTNC',
                           sources=[join('tnc',x) for x in sources],
@@ -74,11 +66,9 @@ index 3beb5fb..a44e247 100755
  
      config.add_extension('_cobyla',
                           sources=[join('cobyla',x) for x in ['cobyla.pyf',
-diff --git a/scipy/signal/setup.py b/scipy/signal/setup.py
-index 34f84e3..2d03cdf 100755
---- a/scipy/signal/setup.py
-+++ b/scipy/signal/setup.py
-@@ -13,14 +13,16 @@ def configuration(parent_package='', top_path=None):
+--- scipy-0.12.0/scipy/signal/setup.py.orig	2013-07-20 21:12:37.297282171 -0300
++++ scipy-0.12.0/scipy/signal/setup.py	2013-07-20 21:17:05.458294413 -0300
+@@ -14,14 +14,16 @@ def configuration(parent_package='', top
                                    'medianfilter.c', 'lfilter.c.src',
                                    'correlate_nd.c.src'],
                           depends=['sigtools.h'],
@@ -87,8 +77,8 @@ index 34f84e3..2d03cdf 100755
 +			 libraries = ['m']
      )
  
--    config.add_extension('spectral', sources=['spectral.c'])
-+    config.add_extension('spectral', sources=['spectral.c'], libraries = ['m'])
+-    config.add_extension('_spectral', sources=['_spectral.c'])
++    config.add_extension('_spectral', sources=['_spectral.c'], libraries = ['m'])
  
      config.add_extension('spline',
          sources=['splinemodule.c', 'S_bspline_util.c', 'D_bspline_util.c',
@@ -97,13 +87,11 @@ index 34f84e3..2d03cdf 100755
      )
  
      return config
-diff --git a/scipy/spatial/setup.py b/scipy/spatial/setup.py
-index 7401d55..d5eba04 100755
---- a/scipy/spatial/setup.py
-+++ b/scipy/spatial/setup.py
-@@ -34,10 +34,11 @@ def configuration(parent_package = '', top_path = None):
-                          libraries=libs,
-                          **lapack)
+--- scipy-0.12.0/scipy/spatial/setup.py.orig	2013-07-20 21:12:49.453282726 -0300
++++ scipy-0.12.0/scipy/spatial/setup.py	2013-07-20 21:17:55.970296719 -0300
+@@ -32,10 +32,11 @@ def configuration(parent_package = '', t
+                          sources=['qhull.c'] + qhull_src,
+                          **cfg)
  
 -    config.add_extension('ckdtree', sources=['ckdtree.c']) # FIXME: cython
 +    config.add_extension('ckdtree', sources=['ckdtree.c'], libraries = ['m']) # FIXME: cython
@@ -114,11 +102,9 @@ index 7401d55..d5eba04 100755
          include_dirs = [get_numpy_include_dirs()])
  
      return config
-diff --git a/scipy/stats/setup.py b/scipy/stats/setup.py
-index 1ada8be..a401457 100755
---- a/scipy/stats/setup.py
-+++ b/scipy/stats/setup.py
-@@ -22,6 +22,7 @@ def configuration(parent_package='',top_path=None):
+--- scipy-0.12.0/scipy/stats/setup.py.orig	2013-07-20 21:13:00.110283213 -0300
++++ scipy-0.12.0/scipy/stats/setup.py	2013-07-20 21:18:22.767297942 -0300
+@@ -23,6 +23,7 @@ def configuration(parent_package='',top_
      # add vonmises_cython module
      config.add_extension('vonmises_cython',
          sources=['vonmises_cython.c'], # FIXME: use cython source
