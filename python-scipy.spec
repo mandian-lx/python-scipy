@@ -2,12 +2,20 @@
 %{?_with_atlas: %global enable_atlas 1}
 %define Werror_cflags %nil
 
+%if %enable_atlas
+%if %{_use_internal_dependency_generator}
+%define __noautoreq 'libptcblas\\.so\\..*|libptf77blas\\.so\\..*'
+%else
+%define _requires_exceptions libptcblas\.so\..*\\|libptf77blas\.so\..*
+%endif
+%endif
+
 %define module	scipy
 
 Summary:	Scientific tools for Python
 Name:		python-%{module}
 Version:	0.12.0
-Release:	1
+Release:	2
 Source0:	%{module}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
