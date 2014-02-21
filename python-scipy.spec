@@ -14,9 +14,9 @@
 
 Summary:	Scientific tools for Python
 Name:		python-%{module}
-Version:	0.12.0
-Release:	2
-Source0:	%{module}-%{version}.tar.gz
+Version:	0.13.0
+Release:	1
+Source0:	http://downloads.sourceforge.net/scipy/scipy-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
 Url:		http://www.scipy.org
@@ -85,11 +85,11 @@ python setup.py config_fc --fcompiler=gnu95 --noarch build
 python setup.py install --prefix=%{_prefix} --root=%{buildroot}
 find %{buildroot}%{python_sitearch}/scipy -type d -name tests | xargs rm -rf # Don't ship tests
 # Don't ship weave examples, they're marked as documentation:
-find %{buildroot}%{python_sitearch}/scipy/weave -type d -name examples | xargs rm -rf
+find %{buildroot}%{py_platsitedir}/scipy/weave -type d -name examples | xargs rm -rf
 # fix executability issue
-chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/arffread.py
-chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/utils.py
-chmod +x %{buildroot}%{python_sitearch}/%{module}/special/spfun_stats.py
+chmod +x %{buildroot}%{py_platsitedir}/%{module}/io/arff/arffread.py
+chmod +x %{buildroot}%{py_platsitedir}/%{module}/io/arff/utils.py
+chmod +x %{buildroot}%{py_platsitedir}/%{module}/special/spfun_stats.py
 
 
 %check
@@ -102,3 +102,4 @@ popd &> /dev/null
 %dir %{py_platsitedir}/%{module}
 %{py_platsitedir}/%{module}/*
 %{py_platsitedir}/%{module}-*.egg-info
+

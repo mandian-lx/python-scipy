@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   scipy-0.12.0.tar.gz: 1ba2e2fc49ba321f62d6f78a5351336ed2509af3
+sources:
+  scipy-0.13.0.tar.gz: 704c2d0a855dd94a341546a475362038a9664dac
