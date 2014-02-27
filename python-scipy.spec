@@ -15,7 +15,7 @@
 Summary:	Scientific tools for Python
 Name:		python-%{module}
 Version:	0.12.0
-Release:	2
+Release:	3
 Source0:	%{module}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
