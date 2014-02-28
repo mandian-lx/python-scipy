@@ -83,13 +83,16 @@ LAPACK=%{_libdir} \
 python setup.py config_fc --fcompiler=gnu95 --noarch build
 
 %install
+# workaround for not using colorgcc when building due to colorgcc
+# messes up output redirection..
+PATH=${PATH#%{_datadir}/colorgcc:}
+
 python setup.py install --prefix=%{_prefix} --root=%{buildroot}
 find %{buildroot}%{python_sitearch}/scipy -type d -name tests | xargs rm -rf # Don't ship tests
 # Don't ship weave examples, they're marked as documentation:
 find %{buildroot}%{python_sitearch}/scipy/weave -type d -name examples | xargs rm -rf
 # fix executability issue
 chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/arffread.py
-chmod +x %{buildroot}%{python_sitearch}/%{module}/io/arff/utils.py
 chmod +x %{buildroot}%{python_sitearch}/%{module}/special/spfun_stats.py
 
 
