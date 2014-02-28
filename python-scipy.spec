@@ -16,7 +16,7 @@ Summary:	Scientific tools for Python
 Name:		python-%{module}
 Version:	0.12.0
 Release:	3
-Source0:	%{module}-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/project/scipy/scipy/%{version}/%{module}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
 Url:		http://www.scipy.org
