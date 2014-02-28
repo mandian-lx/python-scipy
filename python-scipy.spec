@@ -17,6 +17,7 @@ Name:		python-%{module}
 Version:	0.13.3
 Release:	1
 Source0:	http://downloads.sourceforge.net/project/scipy/scipy/%{version}/%{module}-%{version}.tar.gz
+Source1:	%{name}.rpmlintrc
 License:	BSD
 Group:		Development/Python
 Url:		http://www.scipy.org
