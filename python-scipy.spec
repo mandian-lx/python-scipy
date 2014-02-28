@@ -72,6 +72,9 @@ umfpack_libs = umfpack
 EOF
 
 %build
+# workaround for not using colorgcc when building due to colorgcc
+# messes up output redirection..
+PATH=${PATH#%{_datadir}/colorgcc:}
 CFLAGS="%{optflags} -fno-strict-aliasing" \
 ATLAS=%{_libdir}/atlas \
 FFTW=%{_libdir}
