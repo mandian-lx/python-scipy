@@ -14,8 +14,8 @@
 
 Summary:	Scientific tools for Python
 Name:		python-%{module}
-Version:	0.12.0
-Release:	3
+Version:	0.13.3
+Release:	1
 Source0:	http://downloads.sourceforge.net/project/scipy/scipy/%{version}/%{module}-%{version}.tar.gz
 License:	BSD
 Group:		Development/Python
@@ -40,9 +40,8 @@ BuildRequires:	umfpack-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
-Patch0:		umfpack-setup.py.patch
-Patch1:		setup-lm-0.11.0.patch
-Patch2:		scipy-gerqf.patch
+Patch0:		scipy-0.13.3-umfpack-setup.py.patch
+Patch1:		scipy-0.13.3-setup-lm.patch
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -55,9 +54,8 @@ solvers, and others.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p0 -b .umfpack
-%patch1 -p1 -b .lm
-%patch2 -p1
+%patch0 -p1 -b .umfpack~
+%patch1 -p1 -b .lm~
 
 find . -type f -name "*.py" -exec sed -i "s|#!/usr/bin/env python||" {} \;
 

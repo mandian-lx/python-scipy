@@ -1,0 +1,10 @@
+--- scipy-0.13.3/scipy/sparse/linalg/dsolve/umfpack/setup.py.umfpack	2014-02-28 06:42:44.638985860 +0100
++++ scipy-0.13.3/scipy/sparse/linalg/dsolve/umfpack/setup.py	2014-02-28 06:43:50.328987142 +0100
+@@ -13,6 +13,7 @@ def configuration(parent_package='',top_
+     config.add_data_dir('tests')
+ 
+     umf_info = get_info('umfpack', notfound_action=1)
++    umf_info['include_dirs'] = ['/usr/include/suitesparse']
+ 
+     umfpack_i_file = config.paths('umfpack.i')[0]
+ 
