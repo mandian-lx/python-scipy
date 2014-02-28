@@ -102,7 +102,7 @@ PYTHONPATH=%{buildroot}%{py_platsitedir} python -c "import scipy; scipy.test()"
 popd &> /dev/null
 
 %files
-%doc README.txt THANKS.txt LATEST.txt LICENSE.txt TOCHANGE.txt
+%doc doc/README.txt THANKS.txt LICENSE.txt
 %dir %{py_platsitedir}/%{module}
 %{py_platsitedir}/%{module}/*
 %{py_platsitedir}/%{module}-*.egg-info
