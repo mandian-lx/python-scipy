@@ -4,9 +4,9 @@
 
 %if %enable_atlas
 %if %{_use_internal_dependency_generator}
-%define __noautoreq 'libptcblas\\.so\\..*|libptf77blas\\.so\\..*'
+%define __noautoreq 'libsatlas\\.so\\..* 
 %else
-%define _requires_exceptions libptcblas\.so\..*\\|libptf77blas\.so\..*
+%define _requires_exceptions libsatlas\.so\..*
 %endif
 %endif
 
@@ -14,7 +14,7 @@
 
 Summary:	Scientific tools for Python
 Name:		python-%{module}
-Version:	0.13.3
+Version:	0.14.0
 Release:	1
 Source0:	http://downloads.sourceforge.net/project/scipy/scipy/%{version}/%{module}-%{version}.tar.gz
 Source1:	%{name}.rpmlintrc
@@ -41,8 +41,7 @@ BuildRequires:	umfpack-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
 
-Patch0:		scipy-0.13.3-umfpack-setup.py.patch
-Patch1:		scipy-0.13.3-setup-lm.patch
+Patch0:		scipy-lm.patch
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -55,8 +54,7 @@ solvers, and others.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1 -b .umfpack~
-%patch1 -p1 -b .lm~
+%patch0 -p1 -b .lm~
 
 find . -type f -name "*.py" -exec sed -i "s|#!/usr/bin/env python||" {} \;
 
