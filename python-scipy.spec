@@ -14,9 +14,9 @@
 
 Summary:	Scientific tools for Python
 Name:		python-%{module}
-Version:	0.14.0
-Release:	2
-Source0:	http://downloads.sourceforge.net/project/scipy/scipy/%{version}/%{module}-%{version}.tar.gz
+Version:	0.18.1
+Release:	1
+Source0:	https://github.com/scipy/scipy/releases/download/v%{version}/scipy-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 License:	BSD
 Group:		Development/Python
@@ -40,8 +40,7 @@ BuildRequires:	amd-devel
 BuildRequires:	umfpack-devel
 BuildRequires:	python-sphinx
 BuildRequires:	python-matplotlib
-
-Patch0:		scipy-lm.patch
+BuildRequires:	python-setuptools
 
 %description
 SciPy is an open source library of scientific tools for Python. SciPy
@@ -54,7 +53,7 @@ solvers, and others.
 
 %prep
 %setup -q -n %{module}-%{version}
-%patch0 -p1 -b .lm~
+%apply_patches
 
 find . -type f -name "*.py" -exec sed -i "s|#!/usr/bin/env python||" {} \;
 
@@ -79,7 +78,7 @@ ATLAS=%{_libdir}/atlas \
 FFTW=%{_libdir}
 BLAS=%{_libdir} \
 LAPACK=%{_libdir} \
-python setup.py config_fc --fcompiler=gnu95 --noarch build
+python setup.py config_fc --fcompiler=gnu95 --noarch build build_ext -lm
 
 %install
 # workaround for not using colorgcc when building due to colorgcc
