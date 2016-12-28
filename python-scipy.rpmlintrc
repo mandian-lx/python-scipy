@@ -1,2 +1,1 @@
-addFilter('python-scipy\..*: devel-file-in-non-devel-package.*/usr/lib.*/python.*/site-packages/scipy/.*')
-
+addFilter("E: devel-file-in-non-devel-package")
