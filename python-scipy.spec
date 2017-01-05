@@ -35,7 +35,7 @@ BuildRequires:	pkgconfig(lapack)
 BuildRequires:	python-numpy-devel >= 1.5
 BuildRequires:	gcc-gfortran >= 4.0
 BuildRequires:	netcdf-devel
-BuildRequires:	python-devel
+BuildRequires:	python3-devel
 BuildRequires:	python-nose
 BuildRequires:	amd-devel
 BuildRequires:	umfpack-devel
